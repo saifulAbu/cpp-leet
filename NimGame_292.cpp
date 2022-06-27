@@ -7,10 +7,9 @@ public:
     bool canWinNim(int n) {
         return n % 4 != 0;
     }
-};
-
-int main() {
+    int main() {
     NimGame_292 sln;
-     std::cout << sln.canWinNim(4) << endl;
+    std::cout << sln.canWinNim(4) << endl;
     std::cout << "hello world" << std::endl;
 }
+};
