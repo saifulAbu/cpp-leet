@@ -1,6 +1,6 @@
 #include<vector>
 #include<iostream>
-#include <unordered_set>
+#include <set>
 
 using namespace std;
 
@@ -11,14 +11,24 @@ public:
         int L = getLen(max);
         cout << "max " << max << " len " << L << endl;
 
-        unordered_set<int> hashset;
-        hashset.insert(127);
+        set<int> hashset;
+        //hashset.insert(127);
+        int maxXor = 0;
+        for(auto i = L - 1; i >= 0; i--) {
+            hashset.clear();
+            auto candidateMax = maxXor | 1;
+            maxXor = maxXor << 1;
+            for(auto num : nums) {
+                hashset.insert(num >> i); 
+            }
 
-        for(auto cur : hashset) {
-            cout << "elem " << cur << endl;
+            for(auto pref : hashset) {
+                if(hashset.count(pref ^ candidateMax) != 0) {
+                    maxXor = candidateMax;
+                }
+            }
         }
-
-        return 0; 
+        return maxXor; 
     }
 
     int getMax(vector<int>& nums) {
