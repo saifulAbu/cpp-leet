@@ -5,7 +5,8 @@
 using namespace std;
 
 class TrieNode {
-    map<int, TrieNode> child;
+    public:
+    map<int, TrieNode*> child;
 };
 
 class Solution {
@@ -19,14 +20,20 @@ public:
      return 0;
     }
 
-    void insertToTrie(TrieNode root, int num, int maxLen) {
+    void insertToTrie(TrieNode & root, int num, int maxLen) {
         int andBit = 1 << (maxLen - 1);
         cout << andBit << endl;
         cout << "inserting " << num << endl;
+        TrieNode * nextRoot = &root;
         for(int i = 0; i < maxLen; i++) {
             int curBit = (andBit & num) >> (maxLen - i - 1);
             andBit = andBit >> 1;
             cout << curBit;
+
+            if(nextRoot->child[curBit] == nullptr) {
+                nextRoot->child[curBit] = new TrieNode();
+            }
+            nextRoot = nextRoot->child[curBit];
         }
         cout << endl;
     }
@@ -52,7 +59,8 @@ public:
 };
 
 int main() {
-    vector<int> vect{3,10,5,25,2,8};
+    //vector<int> vect{3,10,5,25,2,8};
+    vector<int> vect{3,1,2,0};
     Solution soln;
     soln.findMaximumXOR(vect);
 }
