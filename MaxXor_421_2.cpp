@@ -17,6 +17,18 @@ public:
      for(auto num : nums) {
         insertToTrie(root, num, maxLen);
      }
+
+     int maxXOR = 0;
+     for(auto num : nums) {
+        auto curXOR = getMaxXOR(root, num, maxLen);
+        if(curXOR > maxXOR) {
+            maxXOR = curXOR;
+        }
+        cout << "cur xor " << curXOR << endl;
+     }
+
+
+
      return 0;
     }
 
@@ -36,6 +48,32 @@ public:
             nextRoot = nextRoot->child[curBit];
         }
         cout << endl;
+    }
+
+    int getMaxXOR(TrieNode & root, int num, int maxLen) {
+        int andBit = 1 << (maxLen - 1);
+        TrieNode * curRoot= &root;
+        cout << "getting max xor for " << num << endl;
+        TrieNode * nextRoot = &root;
+        int maxXOR = 0;
+        for(int i = 0; i < maxLen; i++) {
+            int curBit = (andBit & num) >> (maxLen - i - 1);
+            andBit = andBit >> 1;
+
+            int flipBit = 0;
+            if(curBit == 0) {
+                flipBit == 1;
+            }
+
+            maxXOR = maxXOR << 1;
+            if(curRoot->child[flipBit] != nullptr) {
+                maxXOR = maxXOR | 1;
+                curRoot = curRoot->child[flipBit];
+            } else {
+                curRoot = curRoot->child[curBit];
+            }
+        }
+        return maxXOR;
     }
 
     int getMax(vector<int>& nums) {
@@ -59,8 +97,8 @@ public:
 };
 
 int main() {
-    //vector<int> vect{3,10,5,25,2,8};
-    vector<int> vect{3,1,2,0};
+    vector<int> vect{3,10,5,25,2,8};
+    //vector<int> vect{3,1,2,0};
     Solution soln;
     soln.findMaximumXOR(vect);
 }
