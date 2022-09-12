@@ -20,6 +20,7 @@ public:
             insert(root, word);
         }
         cout << "done" << endl;
+        cout << "for today " << endl;
         return res;
     }
 
