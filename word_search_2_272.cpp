@@ -19,8 +19,13 @@ public:
         for(auto word : words) {
             insert(root, word);
         }
-        cout << "done" << endl;
-        cout << "for today " << endl;
+   
+        for(auto vec : board) {
+            for(auto ch : vec) {
+                cout << ch;
+            }
+            cout << endl;
+        }
         return res;
     }
 
@@ -37,9 +42,16 @@ public:
 };
 
 int main() {
-    vector<string> words{"a","ab","aba","abb"};
+    vector<string> words{"oath","pea","eat","rain"};
     Solution soln;
-    vector<vector<char>> wordmap;
+
+    vector<vector<char>> wordmap {
+        {'o','a','a','n'},
+        {'e','t','a','e'},
+        {'i','h','k','r'},
+        {'i','f','l','v'}}; 
+
+                         
     soln.findWords(wordmap, words);
     return 0;
 }
