@@ -13,6 +13,7 @@ class TrieNode {
 
 class Solution {
 public:
+    int directions[4][2] {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
     vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
         TrieNode * root = new TrieNode();
         vector<string> res;
