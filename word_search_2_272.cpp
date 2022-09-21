@@ -13,8 +13,22 @@ class TrieNode {
 
 class Solution {
 public:
+    int R, C;
+    vector<vector<char>>* BOARD;
+    vector<string>* WORDS;
+
     int directions[4][2] {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+    char at(int r, int c) {
+        return (BOARD->at(r)).at(c);
+    }
     vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        BOARD = &board;
+        WORDS = &words;
+        R = board.size();
+        C = board.at(0).size();
+        cout << "R: " << R << " C: " << C << endl;
+
         TrieNode * root = new TrieNode();
         vector<string> res;
         for(auto word : words) {
@@ -24,6 +38,15 @@ public:
         for(auto vec : board) {
             for(auto ch : vec) {
                 cout << ch;
+            }
+            cout << endl;
+        }
+
+        cout << endl;
+
+        for(auto r = 0; r < R; r++) {
+            for(auto c = 0; c < C; c++) {
+                cout << at(r, c);
             }
             cout << endl;
         }
@@ -47,10 +70,10 @@ int main() {
     Solution soln;
 
     vector<vector<char>> wordmap {
-        {'o','a','a','n'},
-        {'e','t','a','e'},
-        {'i','h','k','r'},
-        {'i','f','l','v'}}; 
+        {'o','a','a','n','o'},
+        {'e','t','a','e','o'},
+        {'i','h','k','r','o'},
+        {'i','f','l','v','o'}}; 
 
                          
     soln.findWords(wordmap, words);
