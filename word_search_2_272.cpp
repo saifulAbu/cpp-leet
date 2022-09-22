@@ -22,6 +22,15 @@ public:
     char at(int r, int c) {
         return (BOARD->at(r)).at(c);
     }
+
+    void set(int r, int c, char ch) {
+        (BOARD->at(r))[c] = ch;
+    }
+
+    bool isValid(int r, int c) {
+        return (r >= 0 && r < R) && (c >=0 && c < C);
+    }
+
     vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
         BOARD = &board;
         WORDS = &words;
@@ -34,22 +43,28 @@ public:
         for(auto word : words) {
             insert(root, word);
         }
-   
-        for(auto vec : board) {
-            for(auto ch : vec) {
-                cout << ch;
-            }
-            cout << endl;
-        }
 
         cout << endl;
 
         for(auto r = 0; r < R; r++) {
             for(auto c = 0; c < C; c++) {
                 cout << at(r, c);
+                set(r, c, 'X');
             }
             cout << endl;
         }
+
+        for(auto r = 0; r < R; r++) {
+            for(auto c = 0; c < C; c++) {
+                cout << at(r, c);
+                //set(r, c, 'X');
+            }
+            cout << endl;
+        }
+        cout << endl;
+        cout << isValid(4, 5) << endl;
+        cout << isValid(0, 0) << endl;
+        cout << isValid(11, 1) << endl;
         return res;
     }
 
