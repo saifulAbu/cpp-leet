@@ -15,30 +15,18 @@ class TrieNode {
 class Solution {
 public:
     int R, C;
-    vector<vector<char>>* BOARD;
-    vector<string>* WORDS;
     vector<string> res;
-    set<string> hashset;
 
     int directions[4][2] {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
-    char at(int r, int c) {
-        return (BOARD->at(r)).at(c);
-    }
-
-    void set(int r, int c, char ch) {
-        (BOARD->at(r))[c] = ch;
-    }
-
-    bool isValid(int r, int c) {
+    inline bool isValid(int r, int c) {
         return (r >= 0 && r < R) && (c >=0 && c < C);
     }
 
     vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
-        BOARD = &board;
-        WORDS = &words;
+
         R = board.size();
-        C = board.at(0).size();
+        C = board[0].size();
 
         TrieNode * root = new TrieNode();
         for(auto word : words) {
@@ -47,38 +35,37 @@ public:
 
         for(auto r = 0; r < R; r++) {
             for(auto c = 0; c < C; c++) {
-                char ch = at(r, c);
+                char ch = board[r][c];
                 if(root->child[ch] != nullptr) {
-                    check_word(root->child[ch], r, c);
+                    check_word(root->child[ch], r, c, board, words);
                 }
             }
             cout << endl;
         }
 
-        std::vector<string> v(hashset.begin(), hashset.end());
-        return  v;
+        return res;
     }
 
-    void check_word(TrieNode * root, int r, int c) {
+    void check_word(TrieNode * root, int r, int c, vector<vector<char>>& board, vector<string>& words) {
         if(root->isWord) {
-            hashset.insert(root->word);
-            return;
+            res.push_back(root->word);
+            root->isWord = false;
         }
-        char curCh = at(r, c);
-        set(r, c, '.');
+        char curCh = board[r][c];
+        board[r][c] = '.';
         for(auto dir : directions) {
             int nR = r + dir[0];
             int nC = c + dir[1];
-            if(isValid(nR, nC)) {
-                char nextCh = at(nR, nC);
+            if((nR >= 0 && nR < R) && (nC >=0 && nC < C)) {
+                char nextCh = board[nR][nC];
                 if(nextCh != '.') {
                     if(root->child[nextCh] != nullptr) {
-                        check_word(root->child[nextCh], nR, nC);
+                        check_word(root->child[nextCh], nR, nC, board, words);
                     }
                 }
             }
         }
-        set(r, c, curCh);
+        board[r][c] = curCh;
     }
 
     void insert(TrieNode * root, string word) {
@@ -94,15 +81,22 @@ public:
 };
 
 int main() {
-    vector<string> words{"oath","pea","eat","rain", "e", "l", "z"};
+    //vector<string> words{"oath","pea","eat","rain", "e", "l", "z"};
+
+    vector<string> words {"aaaaaaaaaa","aaaaaaaaab","aaaaaaaaac","aaaaaaaaad","aaaaaaaaae","aaaaaaaaaf","aaaaaaaaag","aaaaaaaaah","aaaaaaaaai","aaaaaaaaaj"};
     //vector<string> words{"e", "a", "l", "z"};
     Solution soln;
 
-    vector<vector<char>> wordmap {
-        {'o','a','a','n','o'},
-        {'e','t','a','e','o'},
-        {'i','h','k','r','o'},
-        {'i','f','l','v','o'}}; 
+    // vector<vector<char>> wordmap {
+    //     {'o','a','a','n','o'},
+    //     {'e','t','a','e','o'},
+    //     {'i','h','k','r','o'},
+    //     {'i','f','l','v','o'}}; 
+
+
+    vector<vector<char>> wordmap {{'m','b','c','d','e','f','g','h','i','j','k','l'},{'n','a','a','a','a','a','a','a','a','a','a','a'},{'o','a','a','a','a','a','a','a','a','a','a','a'},{'p','a','a','a','a','a','a','a','a','a','a','a'},{'q','a','a','a','a','a','a','a','a','a','a','a'},{'r','a','a','a','a','a','a','a','a','a','a','a'},{'s','a','a','a','a','a','a','a','a','a','a','a'},{'t','a','a','a','a','a','a','a','a','a','a','a'},{'u','a','a','a','a','a','a','a','a','a','a','a'},{'v','a','a','a','a','a','a','a','a','a','a','a'},{'w','a','a','a','a','a','a','a','a','a','a','a'},{'x','y','z','a','a','a','a','a','a','a','a','a'}};
+
+
 
                          
     vector<string> res = soln.findWords(wordmap, words);
