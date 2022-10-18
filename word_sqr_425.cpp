@@ -5,17 +5,42 @@
 #include <set>
 using namespace std;
 
+class TrieNode {
+    map<char, TrieNode> child;
+    vector<int>  *wordList;
+
+    TrieNode() {
+        wordList = new vector<int>();
+    }
+};
+
 class Solution {
 public:
+    TrieNode * root;
+    vector<vector<string>> *result = new vector<vector<string>>;
+    vector<string> * words;
+
+    Solution() {
+
+    }
+
+
     vector<vector<string>> wordSquares(vector<string>& words) {
-        vector<vector<string>> result;
-        vector<string> candidate;
+        this->words = &words;
+        vector<string> * candidate = new vector<string>;
 
         // attempt the current word as the first word
+        return *result;
 
     }
 };
 
+int main(void) {
+    Solution soln;
+    cout << soln.wordSquares();
+    cout << "hello wrold" << endl;
+}
+ 
 /*
 TrieNode
     child[]
@@ -68,7 +93,6 @@ formSubString(candidate, step)
     
     return subStr
 
-//Todo Implement
 getCandidateWords(prefix)
     curRoot = TrieRoot
     for(ch : prefix)
