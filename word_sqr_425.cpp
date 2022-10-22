@@ -9,10 +9,6 @@ class TrieNode {
     public:
     map<char, TrieNode *> child;
     vector<int>  wordList;
-
-    TrieNode() {
-        //wordList = new vector<int>();
-    }
 };
 
 class Solution {
@@ -35,16 +31,6 @@ public:
 
     }
 
-/*
-insertToTrie(word, wordIndex)
-    curRoot = trieRoot
-    for(ch : word)
-        if(curRoot.child[ch] == null)
-            curRoot.child[ch] = new TrieNode
-        curRoot = curRoot.child[ch]
-        curRoot.wordList.add(wordIndex)
-        */
-
     void insertToTrie(string & word, int index) {
         TrieNode * curRoot = root;
         curRoot->wordList.push_back(index);
@@ -58,7 +44,7 @@ insertToTrie(word, wordIndex)
     }
 };
 
-
+//TODO: implement check solution function
 int main(void) {
     Solution soln;
     vector<string> words = {"area","lead","wall","lady","ball"};
