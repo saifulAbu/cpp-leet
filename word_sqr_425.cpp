@@ -6,42 +6,68 @@
 using namespace std;
 
 class TrieNode {
-    map<char, TrieNode> child;
-    vector<int>  *wordList;
+    public:
+    map<char, TrieNode *> child;
+    vector<int>  wordList;
 
     TrieNode() {
-        wordList = new vector<int>();
+        //wordList = new vector<int>();
     }
 };
 
 class Solution {
 public:
-    TrieNode * root;
+    TrieNode * root = new TrieNode;
     vector<vector<string>> *result = new vector<vector<string>>;
     vector<string> * words;
 
-    Solution() {
-
-    }
-
-
     vector<vector<string>> wordSquares(vector<string>& words) {
         this->words = &words;
+        //insert to trie
+        for(int i = 0; i < words.size(); i++) {
+            insertToTrie(words[i], i);
+        }
+
         vector<string> * candidate = new vector<string>;
 
         // attempt the current word as the first word
         return *result;
 
     }
+
+/*
+insertToTrie(word, wordIndex)
+    curRoot = trieRoot
+    for(ch : word)
+        if(curRoot.child[ch] == null)
+            curRoot.child[ch] = new TrieNode
+        curRoot = curRoot.child[ch]
+        curRoot.wordList.add(wordIndex)
+        */
+
+    void insertToTrie(string & word, int index) {
+        TrieNode * curRoot = root;
+        curRoot->wordList.push_back(index);
+        for(auto ch : word) {
+            if(curRoot->child[ch] == nullptr) {
+                curRoot->child[ch] = new TrieNode;
+            }
+            curRoot = curRoot->child[ch];
+            curRoot->wordList.push_back(index);
+        }
+    }
 };
+
 
 int main(void) {
     Solution soln;
-    cout << soln.wordSquares();
+    vector<string> words = {"area","lead","wall","lady","ball"};
+    soln.wordSquares(words);
     cout << "hello wrold" << endl;
 }
  
 /*
+=> insert to trie
 TrieNode
     child[]
     wordList[]
