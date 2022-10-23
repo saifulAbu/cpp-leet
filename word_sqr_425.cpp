@@ -16,6 +16,7 @@ public:
     TrieNode * root = new TrieNode;
     vector<vector<string>> *result = new vector<vector<string>>;
     vector<string> * words;
+    vector<int> emptyWordList;
 
     vector<vector<string>> wordSquares(vector<string>& words) {
         this->words = &words;
@@ -41,6 +42,38 @@ public:
             curRoot = curRoot->child[ch];
             curRoot->wordList.push_back(index);
         }
+    }
+
+    string formSubString(vector<string> * candidate) {
+        string substr;
+        int step = candidate->size();
+        for(int i = 0; i < step; i++) {
+            char ch = (*candidate)[i].at(step);
+            substr += ch;
+        }
+        return substr;
+    }
+
+/*
+getCandidateWords(prefix)
+    curRoot = TrieRoot
+    for(ch : prefix)
+        curRoot = curRoot[ch]
+        if(curRoot == null)
+            return null
+    return curRoot.wordList
+
+
+*/
+    vector<int>& getCandidateWords(string & prefix) {
+        TrieNode * curnroot = root;
+        for(auto ch : prefix) {
+            curnroot = curnroot->child[ch];
+            if(curnroot == nullptr) {
+                return emptyWordList;
+            }
+        }
+        return curnroot->wordList;
     }
 };
 
