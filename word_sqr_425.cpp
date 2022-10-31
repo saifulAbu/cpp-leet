@@ -14,21 +14,28 @@ class TrieNode {
 class Solution {
 public:
     TrieNode * root = new TrieNode;
-    vector<vector<string>> *result = new vector<vector<string>>;
+    vector<vector<string>> result;
     vector<string> * words;
     vector<int> emptyWordList;
+    int N;
 
     vector<vector<string>> wordSquares(vector<string>& words) {
         this->words = &words;
+        N = words[0].size();
         //insert to trie
         for(int i = 0; i < words.size(); i++) {
             insertToTrie(words[i], i);
         }
 
-        vector<string> * candidate = new vector<string>;
+        vector<string> candidate;
 
         // attempt the current word as the first word
-        return *result;
+        for(auto word : words) {
+            candidate.push_back(word);
+            checkSolution(candidate);
+            candidate.pop_back();        
+        }
+        return result;
 
     }
 
@@ -44,27 +51,16 @@ public:
         }
     }
 
-    string formSubString(vector<string> * candidate) {
+    string formSubString(vector<string> & candidate) {
         string substr;
-        int step = candidate->size();
+        int step = candidate.size();
         for(int i = 0; i < step; i++) {
-            char ch = (*candidate)[i].at(step);
+            char ch = candidate[i].at(step);
             substr += ch;
         }
         return substr;
     }
 
-/*
-getCandidateWords(prefix)
-    curRoot = TrieRoot
-    for(ch : prefix)
-        curRoot = curRoot[ch]
-        if(curRoot == null)
-            return null
-    return curRoot.wordList
-
-
-*/
     vector<int>& getCandidateWords(string & prefix) {
         TrieNode * curnroot = root;
         for(auto ch : prefix) {
@@ -74,6 +70,23 @@ getCandidateWords(prefix)
             }
         }
         return curnroot->wordList;
+    }
+
+    void checkSolution(vector<string> & candidate) {
+        int step = candidate.size();
+        if(step == N) {
+            vector<string> copyCandidate = candidate;
+            result.push_back(copyCandidate);
+            return;
+        }
+        string substr = formSubString(candidate);
+        auto candidateWords = getCandidateWords(substr);
+        for(auto candidateWordIndex : candidateWords) {
+            candidate.push_back(words->at(candidateWordIndex));
+            checkSolution(candidate);
+            candidate.pop_back();
+        }
+
     }
 };
 
