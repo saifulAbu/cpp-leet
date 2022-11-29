@@ -5,6 +5,7 @@
         "xhash": "cpp",
         "vector": "cpp",
         "map": "cpp",
-        "xtree": "cpp"
+        "xtree": "cpp",
+        "string": "cpp"
     }
 }
