@@ -3,6 +3,8 @@
         "algorithm": "cpp",
         "list": "cpp",
         "xhash": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "map": "cpp",
+        "xtree": "cpp"
     }
 }

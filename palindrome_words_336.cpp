@@ -28,7 +28,7 @@ public:
         return res;
     }
 
-    bool isPalindromeFromIndex(string str, int s) {
+    bool isPalindromeFromIndex(string & str, int s) {
         int e = str.size() - 1;
         while(s < e) {
             if(str[s] != str[e]) {
@@ -102,12 +102,18 @@ public:
         }
         for(int i = 0; i < word.size(); i++) {
             char ch = word[i];
-            curroot = curroot->child[ch];
-            if(curroot == nullptr) {
+            //td update with find iterator stuff
+
+            auto val = curroot->child.find(ch);
+            if (val != curroot->child.end())
+            {
+                curroot = curroot->child[ch];
+            } else {
                 return;
             }
 
-            if(curroot->isWordNode && curroot->wordId != wordIndex && isPalindromeFromIndex(word, i)) {
+
+            if(curroot->isWordNode && curroot->wordId != wordIndex && isPalindromeFromIndex(word, i+1)) {
                 vector<int> pair = {wordIndex, curroot->wordId};
                 res.push_back(pair);
             }
@@ -135,11 +141,6 @@ public:
 
 int main() {
     Solution soln;
-    cout << soln.reversetWord("a") << endl;
-    cout << soln.reversetWord("ab") << endl;
-    cout << soln.reversetWord("abc") << endl;
-    cout << soln.reversetWord("abcd") << endl;
-    cout << soln.reversetWord("abcde") << endl;
     ///vector<string> words = {"aa", "ab", "ba", "bb", "a", "b"};
     //vector<string> words = {"abcd","dcba","lls","s","sssll"};
     //vector<string> words = {"a","aba"};
